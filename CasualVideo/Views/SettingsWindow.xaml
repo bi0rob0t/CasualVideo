@@ -6,7 +6,25 @@
         xmlns:local="clr-namespace:CasualVideo.Views"
         mc:Ignorable="d"
         Title="SettingsWindow" Height="450" Width="800">
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="553*"/>
+            <ColumnDefinition Width="239*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="59*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="246*"/>
+        </Grid.RowDefinitions>
+        <Label FontSize="16" VerticalAlignment="Bottom" Content="Стандартный путь конечных файлов"></Label>
+        <Label Grid.Row="2"  FontSize="16" VerticalAlignment="Bottom" Content="Стандартный путь файла регистрации"></Label>
+        <TextBox Grid.Row="1" Grid.Column="0" Margin="5" IsReadOnly="True" IsReadOnlyCaretVisible="True" ></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="0" Margin="5" IsReadOnly="True" IsReadOnlyCaretVisible="True"></TextBox>
+        <Button Grid.Row="1" Grid.Column="1" Margin="5" Content="Выбрать новый путь"></Button>
+        <Button Grid.Row="3" Grid.Column="1" Margin="5" Content="Выбрать новый путь"></Button>
     </Grid>
+
 </Window>

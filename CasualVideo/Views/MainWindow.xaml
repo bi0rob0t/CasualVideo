@@ -6,33 +6,88 @@
         xmlns:local="clr-namespace:CasualVideo"
         xmlns:viewmodel="clr-namespace:CasualVideo.ViewModels"
         mc:Ignorable="d"
-        Title="Main" Height="450" Width="800">
+        Title="Main" Height="450" Width="850"
+        Background="Black">
 
     <Window.DataContext>
         <viewmodel:MainWindowViewModel />
     </Window.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="97*"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="273*"/>
+            <RowDefinition Height="122*"/>
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="197*"/>
+            <ColumnDefinition Width="199*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
             <Menu>
                 <MenuItem Header="File">
+                    <MenuItem x:Name="OpenFile" Header="Open" Command="{Binding OpenFile}"></MenuItem>
                     <Button>tt</Button>
                 </MenuItem>
                 <MenuItem Header="Edit">
-                    <Button>tt</Button>
+                    <MenuItem x:Name="ConvertTest" Header="ConvertTest" Command="{Binding ConvertTest}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Help" Command ="{Binding OpenHelp}">
-                    
+
                 </MenuItem>
             </Menu>
-            
+
         </Grid>
-        <Grid Grid.Row ="1">
-            <MediaElement x:Name="mediaPlayer" Source="D:\Wildlife.wmv"></MediaElement>
+        <Grid Grid.Row ="1" Grid.Column="0">
+            <ListBox ItemsSource="{Binding Files, UpdateSourceTrigger=PropertyChanged}">
+            </ListBox>
         </Grid>
+        <Grid Grid.Row ="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="17*"/>
+                <RowDefinition Height="4*"/>
+
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <MediaElement x:Name="player" Margin="5"
+                              Volume="{Binding Volume, UpdateSourceTrigger=PropertyChanged}"
+                              Source="{Binding Filename}"
+                              LoadedBehavior="Manual" UnloadedBehavior="Manual"                              
+                              
+                              ></MediaElement>
+            </Grid>
+            <Grid Grid.Row="1">
+                <StackPanel x:Name="videoControls" Orientation="Horizontal" Margin="0, 0, 0, 15">
+
+                    <Button Content="Play" Width="40" Height="25" Margin="5" Command="{Binding Play}" CommandParameter="{Binding ElementName=player}"></Button>
+                    <Button Margin="5" Width="40" Height="25" Content="Pause" Command="{Binding Pause}" CommandParameter="{Binding ElementName=player}" ></Button>
+                    <Button Content="Stop" Margin="5" Width="40" Height="25" Command="{Binding Stop}" CommandParameter="{Binding ElementName=player}" ></Button>
+                    <TextBlock Text="Громкость" VerticalAlignment="Center" Foreground="AliceBlue"></TextBlock>
+                    <Slider x:Name="volume" Margin="5" Width="60" VerticalAlignment="Center" Value="{Binding Volume, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1"></Slider>
+                    <TextBlock Text="Текущее время" VerticalAlignment="Center" Foreground="AliceBlue" ></TextBlock>
+                    <TextBox x:Name="timePosition" Margin="5" Height="25" Width="40" Text="{Binding Time}" IsReadOnly="True" IsReadOnlyCaretVisible="True" ></TextBox>
+
+                </StackPanel>
+
+
+            </Grid>
+
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="128*"/>
+                <ColumnDefinition Width="291*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="5" Grid.Column="0">
+                <Label Content="Начало" Foreground="AntiqueWhite" FontSize="18" Margin="5"></Label>
+                <Label Content="Конец" Foreground="AntiqueWhite" FontSize="18" Margin="5"></Label>
+            </StackPanel>
+            <StackPanel Margin="5" Grid.Column="2">
+                <TextBox Margin="5"></TextBox>
+                <TextBox Margin="5"></TextBox>
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </Window>

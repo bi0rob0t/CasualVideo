@@ -20,7 +20,7 @@ namespace CasualVideo.ViewModels
 {
     class StartWindowViewModel : BaseVM
     {
-        public bool _isAutorized;
+        private bool _isAutorized;
         public bool isAutorized
         {
             get { return _isAutorized; }
@@ -37,8 +37,9 @@ namespace CasualVideo.ViewModels
 
                 return new DelegateCommand(() =>
                 {
+                    
                     MainWindow mainWindow = new MainWindow();
-                    MainWindowViewModel vm = new MainWindowViewModel { };
+                    MainWindowViewModel vm = new MainWindowViewModel ();
                     mainWindow.DataContext = vm;
                     mainWindow.Show();
                 });

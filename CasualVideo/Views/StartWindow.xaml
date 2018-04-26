@@ -36,7 +36,7 @@
                 IsEnabled="{Binding ElementName=isLogined, Path=IsChecked}"
                 Background="#A6222F"
                 Name="bt_create"
-                Content="Создать новый проект"                
+                Content="Создать проект"                
                 Margin="5"
                 HorizontalContentAlignment="Left"
                 Command= "{Binding CreateProject}"
@@ -45,16 +45,7 @@
                 
         >
             </Button>
-            <Button 
-                Name="bt_open"
-                Content="Открыть проект"                
-                Margin="5"
-                HorizontalContentAlignment="Left"
-                IsEnabled="{Binding ElementName=isLogined, Path=IsChecked}"
-                VerticalContentAlignment="Center"
-                
-        >
-            </Button>
+            
             <Button 
                 Name="bt_help"
                 Content="Справка"
