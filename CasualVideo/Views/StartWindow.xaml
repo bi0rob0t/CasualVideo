@@ -40,6 +40,7 @@
                 Margin="5"
                 HorizontalContentAlignment="Left"
                 Command= "{Binding CreateProject}"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
                 
                 VerticalContentAlignment="Center"
                 
@@ -73,7 +74,7 @@
             </Button>
             
         </StackPanel>
-        <Grid Grid.Column="1" Background="DarkGray">
+        <Grid Grid.Column="1" Background="Gray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="131*"/>
                 <ColumnDefinition Width="84*"/>

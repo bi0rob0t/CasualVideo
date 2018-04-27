@@ -9,17 +9,18 @@ namespace CasualVideo.Models
 {
     class Settings
     {
-        public string[] ParseFile()
-        {
-            return new string[] { };
+        private static string pathSettings = @"settings.ini";
+        public static string[] ParseFile()
+        {            
+            return File.ReadAllLines(pathSettings);
         }
-        public void RewriteFile()
+        public static void RewriteFile(string output, string reg)
         {
-
-        }
-        public bool CheckFile()
-        {
-            return true;
+            using (StreamWriter sw = new StreamWriter(pathSettings))
+            {
+                sw.WriteLine(output);
+                sw.WriteLine(reg);
+            }
         }
     }
 }

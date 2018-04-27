@@ -30,18 +30,21 @@ namespace CasualVideo.ViewModels
         public string Password { get; set; }
 
 
-        public ICommand CreateProject
+        public DelegateCommand<Window> CreateProject
         {
             get
             {
 
-                return new DelegateCommand(() =>
+                return new DelegateCommand<Window>((w) =>
                 {
                     
                     MainWindow mainWindow = new MainWindow();
                     MainWindowViewModel vm = new MainWindowViewModel ();
                     mainWindow.DataContext = vm;
+                    w.Close();
                     mainWindow.Show();
+
+
                 });
 
             }
@@ -56,7 +59,7 @@ namespace CasualVideo.ViewModels
                     HelpWindow helpWindow = new HelpWindow();
                     HelpWindowViewModel vm = new HelpWindowViewModel { };
                     helpWindow.DataContext = vm;
-                    helpWindow.Show();
+                    helpWindow.ShowDialog();
                 });
 
             }

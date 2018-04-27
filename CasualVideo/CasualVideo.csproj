@@ -115,6 +115,7 @@
     <Compile Include="Interfaces\ILog.cs" />
     <Compile Include="Models\Auth.cs" />
     <Compile Include="Models\BaseVM.cs" />
+    <Compile Include="Models\ConvertService.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="ViewModels\HelpWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

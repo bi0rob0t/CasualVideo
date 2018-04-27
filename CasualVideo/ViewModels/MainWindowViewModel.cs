@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,14 +17,26 @@ namespace CasualVideo.ViewModels
     class MainWindowViewModel : BaseVM
     {
         DispatcherTimer timer = new DispatcherTimer();
-        
+        DispatcherTimer timerUpdateFiles = new DispatcherTimer();
+        private double maxTime;
         private double _time = 0;
         public double Time
         {
             get { return _time; }
             set { _time = value; RaisePropertyChanged("Time"); }
         }
-
+        private double _startTime = 0;
+        public double StartTime
+        {
+            get { return _startTime; }
+            set { _startTime = value; RaisePropertyChanged("StartTime"); }
+        }
+        private double _endTime = 0;
+        public double EndTime
+        {
+            get { return _endTime; }
+            set { _endTime = value; RaisePropertyChanged("EndTime"); }
+        }
 
         public string currentPath = @"D:\";
         
@@ -65,21 +78,7 @@ namespace CasualVideo.ViewModels
 
         }
 
-        
-        public DelegateCommand MediaEnded()
-        {
-            
-                return new DelegateCommand(() =>
-                {
-                    var tt = new FileInfo(Filename);
-                    
-                    
-                    Time = 0;
-                    timer.Stop();
-                });
 
-            
-        }
 
         public DelegateCommand<MediaElement> Play
         {
@@ -88,13 +87,19 @@ namespace CasualVideo.ViewModels
 
                 return new DelegateCommand<MediaElement>((me) =>
                 {
-                    Xabe.FFmpeg.Conversion.ToWebM(Filename, @"D:\out1").Start();
+                    
                     me.Play();
+                    Thread.Sleep(1000);
+                    Time += 0.1;
                     timer.Start();
+                    maxTime = me.NaturalDuration.TimeSpan.TotalSeconds;
+                    
                 });
 
             }
         }
+
+
         public DelegateCommand<MediaElement> Stop
         {
             get
@@ -123,7 +128,83 @@ namespace CasualVideo.ViewModels
             }
         }
 
+        public ICommand ConvertToMp4
+        {
+            get
+            {
 
+                return new DelegateCommand(() =>
+                {
+
+                    ConvertService cs = new ConvertService();
+                    cs.ToMp4(Filename, currentPath + "out.mp4");
+
+                });
+
+            }
+        }
+        public ICommand ConvertToGif
+        {
+            get
+            {
+
+                return new DelegateCommand(() =>
+                {
+
+                    ConvertService cs = new ConvertService();
+                    cs.ToGif(Filename, currentPath + "out.gif", 100);
+
+                });
+
+            }
+        }
+        public ICommand ConvertToWebM
+        {
+            get
+            {
+
+                return new DelegateCommand(() =>
+                {
+
+                    ConvertService cs = new ConvertService();
+                    cs.ToWebM(Filename);
+
+                });
+
+            }
+        }
+        public ICommand ConvertToOgv
+        {
+            get
+            {
+
+                return new DelegateCommand(() =>
+                {
+
+                    ConvertService cs = new ConvertService();
+                    cs.ToOgv(Filename, currentPath + "out.ogv");
+
+                });
+
+            }
+        }
+        public ICommand ConvertToTs
+        {
+            get
+            {
+
+                return new DelegateCommand(() =>
+                {
+                    
+                    ConvertService cs = new ConvertService();
+                    MessageBox.Show(Filename);
+                    //cs.ToTs(Filename);
+
+                });
+
+            }
+        }
+        
 
         public ICommand OpenFile
         {
@@ -141,20 +222,41 @@ namespace CasualVideo.ViewModels
                         currentPath = ofd.FileName;
                     }
                     Filename = ofd.FileName;
-                    currentPath = currentPath.Substring(0, currentPath.LastIndexOf('\\') + 1);
-                    MessageBox.Show(Filename);
+                    currentPath = currentPath.Substring(0, currentPath.LastIndexOf('\\') + 1);                    
                     UpdateFiles(currentPath);
 
                     timer.Interval = TimeSpan.FromSeconds(0.1);
+                    timerUpdateFiles.Interval = TimeSpan.FromMinutes(1);
+                    timerUpdateFiles.Tick += new EventHandler(TimerUpdateFiles_Tick);
                     timer.Tick += new EventHandler(timer_Tick);
                     
                 });
 
             }
         }
+
+        private void TimerUpdateFiles_Tick(object sender, EventArgs e)
+        {
+            UpdateFiles(currentPath);
+        }
+
+        public ICommand Close
+        {
+            get
+            {
+
+                return new DelegateCommand(() =>
+                {
+                    Application.Current.Shutdown();
+
+                });
+
+            }
+        }
         private void timer_Tick(object sender, EventArgs e)
-        {           
-            Time += 0.1;
+        {        
+            if(Time < maxTime)
+                Time += 0.1;
         }
         public ICommand OpenHelp
         {
@@ -162,25 +264,27 @@ namespace CasualVideo.ViewModels
             {
 
                 return new DelegateCommand(() =>
-                {
-                    UpdateFiles(@"D:\");
+                {                    
                     HelpWindow helpWindow = new HelpWindow();
                     HelpWindowViewModel vm = new HelpWindowViewModel { };
                     helpWindow.DataContext = vm;
-                    helpWindow.Show();
+                    helpWindow.ShowDialog();
                 });
 
             }
         }
 
-        public ICommand ConvertTest
+        public ICommand OpenSettings
         {
             get
             {
 
                 return new DelegateCommand(() =>
                 {
-                    Xabe.FFmpeg.Conversion.ToMp4(Filename, @"D:\testResult.mp4").Start();
+                    SettingsWindow settingsWindow = new SettingsWindow();
+                    SettingsWindowViewModel vm = new SettingsWindowViewModel { };
+                    settingsWindow.DataContext = vm;
+                    settingsWindow.ShowDialog();
                 });
 
             }

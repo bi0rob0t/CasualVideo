@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CasualVideo.Views"
+        xmlns:viewmodel="clr-namespace:CasualVideo.ViewModels"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="450" Width="800">
-
+        Title="SettingsWindow" Height="450" Width="600"
+        Background="Gray">
+    <Window.DataContext>
+        <viewmodel:SettingsWindowViewModel />
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="553*"/>
@@ -19,12 +23,12 @@
             <RowDefinition Height="45*"/>
             <RowDefinition Height="246*"/>
         </Grid.RowDefinitions>
-        <Label FontSize="16" VerticalAlignment="Bottom" Content="Стандартный путь конечных файлов"></Label>
-        <Label Grid.Row="2"  FontSize="16" VerticalAlignment="Bottom" Content="Стандартный путь файла регистрации"></Label>
-        <TextBox Grid.Row="1" Grid.Column="0" Margin="5" IsReadOnly="True" IsReadOnlyCaretVisible="True" ></TextBox>
-        <TextBox Grid.Row="3" Grid.Column="0" Margin="5" IsReadOnly="True" IsReadOnlyCaretVisible="True"></TextBox>
-        <Button Grid.Row="1" Grid.Column="1" Margin="5" Content="Выбрать новый путь"></Button>
-        <Button Grid.Row="3" Grid.Column="1" Margin="5" Content="Выбрать новый путь"></Button>
+        <Label FontSize="16" VerticalAlignment="Bottom" Foreground="AliceBlue" Content="Стандартный путь конечных файлов"></Label>
+        <Label Grid.Row="2"  FontSize="16" Foreground="AliceBlue" VerticalAlignment="Bottom" Content="Стандартный путь файла регистрации"></Label>
+        <TextBox Grid.Row="1" Grid.Column="0" Margin="5" IsReadOnly="True" IsReadOnlyCaretVisible="True" Text="{Binding OutPath, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="0" Margin="5" IsReadOnly="True" IsReadOnlyCaretVisible="True" Text="{Binding RegPath, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <Button Grid.Row="1" Grid.Column="1" Margin="5" Content="Выбрать новый путь" Command="{Binding ChangeOutPath}"></Button>
+        <Button Grid.Row="3" Grid.Column="1" Margin="5" Content="Выбрать новый путь" Command="{Binding ChangeRegPath}"></Button>
     </Grid>
 
 </Window>

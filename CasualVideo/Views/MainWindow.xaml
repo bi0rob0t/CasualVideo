@@ -27,14 +27,19 @@
             <Menu>
                 <MenuItem Header="File">
                     <MenuItem x:Name="OpenFile" Header="Open" Command="{Binding OpenFile}"></MenuItem>
-                    <Button>tt</Button>
+                    <MenuItem x:Name="Close" Header="Close" Command="{Binding Close}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Edit">
-                    <MenuItem x:Name="ConvertTest" Header="ConvertTest" Command="{Binding ConvertTest}"></MenuItem>
+                    <MenuItem x:Name="Convert" Header="Convert to...">
+                        <MenuItem Header="mp4" Command="{Binding ConvertToMp4}"></MenuItem>
+                        <MenuItem Header="gif" Command="{Binding ConvertToGif}"></MenuItem>
+                        <MenuItem Header="webm" Command="{Binding ConvertToWebM}"></MenuItem>
+                        <MenuItem Header="ogv" Command="{Binding ConvertToOgv}"></MenuItem>
+                        <MenuItem Header="ts" Command="{Binding ConvertToTs}"></MenuItem>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Help" Command ="{Binding OpenHelp}">
-
-                </MenuItem>
+                <MenuItem Header="Settings" Command ="{Binding OpenSettings}"></MenuItem>
+                <MenuItem Header="Help" Command ="{Binding OpenHelp}"></MenuItem>
             </Menu>
 
         </Grid>
@@ -53,7 +58,8 @@
                 <MediaElement x:Name="player" Margin="5"
                               Volume="{Binding Volume, UpdateSourceTrigger=PropertyChanged}"
                               Source="{Binding Filename}"
-                              LoadedBehavior="Manual" UnloadedBehavior="Manual"                              
+                              LoadedBehavior="Manual" UnloadedBehavior="Manual" 
+                              
                               
                               ></MediaElement>
             </Grid>
@@ -84,8 +90,8 @@
                 <Label Content="Конец" Foreground="AntiqueWhite" FontSize="18" Margin="5"></Label>
             </StackPanel>
             <StackPanel Margin="5" Grid.Column="2">
-                <TextBox Margin="5"></TextBox>
-                <TextBox Margin="5"></TextBox>
+                <TextBox Margin="5" Text="{Binding StartTime}"></TextBox>
+                <TextBox Margin="5" Text="{Binding EndTime}"></TextBox>
             </StackPanel>
         </Grid>
 

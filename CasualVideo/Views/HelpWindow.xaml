@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CasualVideo.Views"
         mc:Ignorable="d"
-        Title="HelpWindow" Height="450" Width="800">
+        Title="HelpWindow" Height="400" Width="400" ResizeMode="NoResize" Background="Gray">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="114*"/>
+            <RowDefinition Height="71*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="20" FontSize="18" TextWrapping="Wrap" Text="Casual Video - программа для редактирования и монтажа. Интерфейс понятный, для новичков достаточно простой. Разобраться, как устроена программа, новичок сможет за 10-15 минут. Casual Video поддерживает множество форматов" Grid.RowSpan="2"></TextBlock>
+        <TextBlock Grid.Row="1" Margin="20" FontSize="18" FontStyle="Oblique" TextWrapping="Wrap" Text="Спасибо за использование Casual Video. Продукт будет со временем улучшаться" Grid.RowSpan="2"></TextBlock>
+
     </Grid>
 </Window>
