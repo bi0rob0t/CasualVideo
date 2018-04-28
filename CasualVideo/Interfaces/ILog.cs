@@ -8,6 +8,7 @@ namespace CasualVideo.Interfaces
 {
     interface ILog
     {
-        void addAction();
+        string pathLog { get; set; }
+        void addAction(string format);
     }
 }

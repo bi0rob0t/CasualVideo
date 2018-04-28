@@ -80,6 +80,7 @@ namespace CasualVideo.ViewModels
 
             }
         }
+
         public ICommand OpenRegister
         {
             get

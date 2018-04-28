@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -16,6 +17,7 @@ namespace CasualVideo.ViewModels
 {
     class MainWindowViewModel : BaseVM
     {
+        public ListBoxItem Test { get; set; }
         DispatcherTimer timer = new DispatcherTimer();
         DispatcherTimer timerUpdateFiles = new DispatcherTimer();
         private double maxTime;
@@ -121,6 +123,10 @@ namespace CasualVideo.ViewModels
 
                 return new DelegateCommand<MediaElement>((me) =>
                 {
+
+                    MessageBox.Show(Test.Content + "");
+
+
                     me.Pause();
                     timer.Stop();
                 });
@@ -136,8 +142,8 @@ namespace CasualVideo.ViewModels
                 return new DelegateCommand(() =>
                 {
 
-                    ConvertService cs = new ConvertService();
-                    cs.ToMp4(Filename, currentPath + "out.mp4");
+                    RenderService cs = new RenderService();
+                    cs.ToMp4(Filename);
 
                 });
 
@@ -151,8 +157,8 @@ namespace CasualVideo.ViewModels
                 return new DelegateCommand(() =>
                 {
 
-                    ConvertService cs = new ConvertService();
-                    cs.ToGif(Filename, currentPath + "out.gif", 100);
+                    RenderService cs = new RenderService();
+                    cs.ToGif(Filename, 100);
 
                 });
 
@@ -166,7 +172,7 @@ namespace CasualVideo.ViewModels
                 return new DelegateCommand(() =>
                 {
 
-                    ConvertService cs = new ConvertService();
+                    RenderService cs = new RenderService();
                     cs.ToWebM(Filename);
 
                 });
@@ -181,8 +187,8 @@ namespace CasualVideo.ViewModels
                 return new DelegateCommand(() =>
                 {
 
-                    ConvertService cs = new ConvertService();
-                    cs.ToOgv(Filename, currentPath + "out.ogv");
+                    RenderService cs = new RenderService();
+                    cs.ToOgv(Filename);
 
                 });
 
@@ -196,15 +202,30 @@ namespace CasualVideo.ViewModels
                 return new DelegateCommand(() =>
                 {
                     
-                    ConvertService cs = new ConvertService();
-                    MessageBox.Show(Filename);
-                    //cs.ToTs(Filename);
+                    RenderService cs = new RenderService();                    
+                    cs.ToTs(Filename);
 
                 });
 
             }
         }
-        
+        public ICommand Split
+        {
+            get
+            {
+
+                return new DelegateCommand(() =>
+                {
+
+                    RenderService cs = new RenderService();
+                    cs.Split(Filename, StartTime, EndTime, maxTime);
+
+
+                });
+
+            }
+        }
+
 
         public ICommand OpenFile
         {
@@ -226,8 +247,6 @@ namespace CasualVideo.ViewModels
                     UpdateFiles(currentPath);
 
                     timer.Interval = TimeSpan.FromSeconds(0.1);
-                    timerUpdateFiles.Interval = TimeSpan.FromMinutes(1);
-                    timerUpdateFiles.Tick += new EventHandler(TimerUpdateFiles_Tick);
                     timer.Tick += new EventHandler(timer_Tick);
                     
                 });
@@ -235,10 +254,6 @@ namespace CasualVideo.ViewModels
             }
         }
 
-        private void TimerUpdateFiles_Tick(object sender, EventArgs e)
-        {
-            UpdateFiles(currentPath);
-        }
 
         public ICommand Close
         {
@@ -289,10 +304,9 @@ namespace CasualVideo.ViewModels
 
             }
         }
-        private async void test()
-        {
-            await Xabe.FFmpeg.Conversion.ToMp4(Filename, @"D:\testResult.mp4" ).Start();
-        }
+
+
+
 
     }
 }

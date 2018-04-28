@@ -11,6 +11,7 @@
         Background="DarkGray"
         WindowStartupLocation="CenterScreen"
         WindowStyle="ThreeDBorderWindow"
+        Icon="D:\Курсач\CasualVideo\CasualVideo\ico.png"
         >
     <Window.DataContext>
         <viewmodel:StartWindowViewModel />

@@ -10,18 +10,8 @@ namespace CasualVideo.Models
 {
     class Auth
     {
-        private string path = @"D:\Курсач\CasualVideo\CasualVideo\registerLogins.regs";
-        private int Token  { get; set; }
-        public void generateToken()
-        {
-            
-        }
-        public bool checkAuth(int inToken)
-        {
-            if (inToken == Token)
-                return true;
-            return false;
-        }
+        private string path = Settings.ParseFile()[1];
+
         public bool AuthProcess(string login, string password)
         {
             if (login == null || password == null)
@@ -36,15 +26,22 @@ namespace CasualVideo.Models
         private Dictionary<string,string> ParseFile()
         {
             List<string> stringsOfFile = new List<string>();
-            
-            using (StreamReader sr = File.OpenText(path))
+            try
             {
-                string s = "";
-                while ((s = sr.ReadLine()) != null)
+                using (StreamReader sr = File.OpenText(path))
                 {
-                    stringsOfFile.Add(s);
+                    string s = "";
+                    while ((s = sr.ReadLine()) != null)
+                    {
+                        stringsOfFile.Add(s);
+                    }
                 }
             }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
             Dictionary<string, string> logins = new Dictionary<string, string>();
             foreach (string s in stringsOfFile)
             {

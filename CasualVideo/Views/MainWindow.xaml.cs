@@ -23,9 +23,7 @@ namespace CasualVideo
         public MainWindow()
         {
             InitializeComponent();
-
-
         }
-        
+
     }
 }

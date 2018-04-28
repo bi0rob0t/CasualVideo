@@ -17,6 +17,7 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
         WindowStyle="ThreeDBorderWindow"
+        Icon="D:\Курсач\CasualVideo\CasualVideo\ico.png"
         
         >
     <Window.Resources>
@@ -137,9 +138,9 @@
                             Command="{Binding OpenRegister}"
                             x:Name="bt_reg"></Button>
             
-            <Image Source="/CasualVideo;component/icon.png" Stretch="Fill" Grid.Column="1"  Grid.Row="3" Grid.ColumnSpan="3" Margin="5"/>
+            <Image Source="/CasualVideo;component/icon.png" Stretch="Fill" Grid.Column="1"  Grid.Row="3" Grid.ColumnSpan="3" Margin="30, 0, 30, 0"/>
 
-            <Image Source="/CasualVideo;component/nothing.png" Stretch="Fill" ForceCursor="True" />
+            
             <CheckBox x:Name="isLogined"
                       Visibility="{Binding isAutorized, Converter={StaticResource booleanToVisibilityConverter}}"
                       IsEnabled="True"                      

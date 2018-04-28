@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CasualVideo.Views"
         mc:Ignorable="d"
-        Title="HelpWindow" Height="400" Width="400" ResizeMode="NoResize" Background="Gray">
+        Title="HelpWindow" Height="400" Width="400" ResizeMode="NoResize" Background="Gray"
+        Icon="D:\Курсач\CasualVideo\CasualVideo\ico.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="114*"/>
