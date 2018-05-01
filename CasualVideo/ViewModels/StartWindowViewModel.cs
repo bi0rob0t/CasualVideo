@@ -21,6 +21,7 @@ namespace CasualVideo.ViewModels
     class StartWindowViewModel : BaseVM
     {
         private bool _isAutorized;
+        
         public bool isAutorized
         {
             get { return _isAutorized; }

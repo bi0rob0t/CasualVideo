@@ -17,7 +17,7 @@ namespace CasualVideo.ViewModels
 {
     class MainWindowViewModel : BaseVM
     {
-        public ListBoxItem Test { get; set; }
+        public string SelectedListItem { get; set; }
         DispatcherTimer timer = new DispatcherTimer();
         DispatcherTimer timerUpdateFiles = new DispatcherTimer();
         private double maxTime;
@@ -49,12 +49,7 @@ namespace CasualVideo.ViewModels
             set { _filename = value; RaisePropertyChanged("Filename"); }
         }
         public MainWindowViewModel()
-        {
-            
-            //UpdateFiles(currentPath);
- 
-
-
+        {         
         }
         private double _volume = 1;
         public double Volume
@@ -124,7 +119,7 @@ namespace CasualVideo.ViewModels
                 return new DelegateCommand<MediaElement>((me) =>
                 {
 
-                    MessageBox.Show(Test.Content + "");
+                    
 
 
                     me.Pause();
@@ -219,6 +214,22 @@ namespace CasualVideo.ViewModels
 
                     RenderService cs = new RenderService();
                     cs.Split(Filename, StartTime, EndTime, maxTime);
+
+
+                });
+
+            }
+        }
+        public ICommand Concatenate
+        {
+            get
+            {
+
+                return new DelegateCommand(() =>
+                {
+
+                    RenderService cs = new RenderService();
+                    cs.Concatenate(Filename, SelectedListItem);
 
 
                 });

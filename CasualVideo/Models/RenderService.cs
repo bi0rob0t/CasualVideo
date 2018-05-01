@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using Xabe.FFmpeg.Model;
 
 namespace CasualVideo.Models
 {
@@ -16,10 +17,10 @@ namespace CasualVideo.Models
         {
             currentOutput = Settings.ParseFile()[0];         
         }
-        public  void ToMp4(string input)
+        public async  void ToMp4(string input)
         {
             SetOutputPath();
-            Xabe.FFmpeg.Conversion.ToMp4(input, currentOutput + GetName(input) + ".mp4").Start();
+            await Xabe.FFmpeg.Conversion.ToMp4(input, currentOutput + GetName(input) + ".mp4").Start();
             addAction(String.Format("{0} - {1} - Конвертация в {1}", DateTime.Now, input, "mp4"));
             MessageBox.Show("Конвертация в mp4 завершена");
         }
@@ -71,7 +72,14 @@ namespace CasualVideo.Models
             
         }
 
+        public async void Concatenate(string Filename, string SelectedListItem)
+        {
+            SetOutputPath();
+            //MessageBox.Show(Filename);
+           // MessageBox.Show(Filename.Substring(0, Filename.LastIndexOf('\\') + 1)  + SelectedListItem);
 
+            var result = await Xabe.FFmpeg.Conversion.Concatenate(currentOutput + "out.mp4", Filename, Filename.Substring(0, Filename.LastIndexOf('\\') + 1) + SelectedListItem);
+        }
 
 
         private string GetName(string _filename)
